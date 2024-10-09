@@ -1,6 +1,11 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import pyqtSlot
+
+
+
+from App.controller.login import validarLogin
 
 
 class LoginInterface(QDialog):
@@ -13,6 +18,8 @@ class LoginInterface(QDialog):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.btnMinimizar.clicked.connect(self.showMinimized)
         self.btnFechar.clicked.connect(self.close)
+
+        # self.btnEntrar.clicked.connect(self.validarLogin)
 
     def getEmailSenha(self):
         email = self.inputEmail.text().strip()
@@ -27,6 +34,16 @@ class LoginInterface(QDialog):
         texto = 'DADOS INCOMPLETOS.'
         self.respostaLoginDadosIncompleto.setText(texto)
         QTimer.singleShot(2000, lambda: self.limparCampos(self.respostaLoginDadosIncompleto))
+
+
+    @pyqtSlot()
+    def on_btnEntrar_clicked(self):
+        campos = self.getEmailSenha()
+        if validarLogin(campos[0], campos[1]):
+            self.validandoDados()
+            self.accept()
+        else:
+            self.dadosInvalidos()
 
     def limparCampos(self, campo):
         campo.clear()
