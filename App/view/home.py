@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-from .cadastroPessoas import cadastroPessoas
-from .reserva import ReservaInterface
-from .cadastrarArea import CadastrarArea
-from .cadastrarCurso import CadastrarCurso
+from PyQt5.QtCore import Qt
+from cadastroPessoas import cadastroPessoas
+from reserva import ReservaInterface
+from cadastrarArea import CadastrarArea
+from cadastrarCurso import CadastrarCurso
 
 
 class HomePrincipal(QMainWindow):
@@ -12,6 +13,7 @@ class HomePrincipal(QMainWindow):
         loadUi('App/view/ui/interfaceHomeV1.ui',self)
 
    # Criando instancias das interfaces
+        self.setWindowFlags(Qt.FramelessWindowHint)
         self.interfCasPessoa = cadastroPessoas()
         self.interfReserva = ReservaInterface()
         self.interfCasArea = CadastrarArea()
@@ -23,6 +25,10 @@ class HomePrincipal(QMainWindow):
         self.btnIncio.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.inicio))
         self.btnArea.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.interfCasArea))
         self.btnCurso.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.interfCasCurso))
+        self.btnMinimizar.clicked.connect(self.showMinimized)
+        self.btnTelaCheia.clicked.connect(self.showMaximized)
+        self.btnFecharPagina.clicked.connect(self.close)
+
 
     def inserirTelas(self, telas):
         for interface in telas:

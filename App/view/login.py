@@ -11,6 +11,8 @@ class LoginInterface(QDialog):
         self.setWindowFlags(Qt.FramelessWindowHint)
         # Define a janela como transparente
         self.setAttribute(Qt.WA_TranslucentBackground)
+        self.btnMinimizar.clicked.connect(self.showMinimized)
+        self.btnFecharPagina.clicked.connect(self.close)
 
     def getEmailSenha(self):
         email = self.inputEmail.text().strip()
